@@ -1,0 +1,21 @@
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .navigation button {
+    font-size: 24px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #87CEEB;
+    border: none;
+    border-radius: 50%;
+    color: white;
+  }
+  
+  .navigation button:hover {
+    background-color: #5F9EA0;
+  }
+  

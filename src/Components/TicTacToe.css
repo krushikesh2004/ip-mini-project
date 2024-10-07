@@ -1,0 +1,64 @@
+.tic-tac-toe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .status {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #4a4a4a;
+  }
+  
+  .board {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0e68c;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .board-row {
+    display: flex;
+  }
+  
+  .square {
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 5px;
+    background-color: white;
+    border: 2px solid #4a4a4a;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .square:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .reset-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #87CEEB;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .reset-button:hover {
+    background-color: #5F9EA0;
+  }
+  

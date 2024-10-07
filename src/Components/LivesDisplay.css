@@ -1,0 +1,21 @@
+.lives-display {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .lives-label {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .lives-value {
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #FF6347;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+  }
+  

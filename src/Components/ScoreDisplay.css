@@ -1,0 +1,20 @@
+.score-display {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.score-label {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.score-value {
+  font-size: 30px;
+  font-weight: bold;
+  background-color: #FF69B4;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
