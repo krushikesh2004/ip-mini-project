@@ -1,64 +1,107 @@
 .tic-tac-toe {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: Arial, sans-serif;
-  }
-  
-  h2 {
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .status {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #4a4a4a;
-  }
-  
-  .board {
-    display: flex;
-    flex-direction: column;
-    background-color: #f0e68c;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .board-row {
-    display: flex;
-  }
-  
-  .square {
-    width: 80px;
-    height: 80px;
-    font-size: 36px;
-    font-weight: bold;
-    margin: 5px;
-    background-color: white;
-    border: 2px solid #4a4a4a;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .square:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .reset-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #87CEEB;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .reset-button:hover {
-    background-color: #5F9EA0;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  /* background-color: #f0f0f0; */
+
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.status {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #4a4a4a;
+  font-weight: bold;
+}
+
+.game-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-indicator {
+  font-size: 48px;
+  font-weight: bold;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+  border-radius: 50%;
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.player-indicator.active {
+  opacity: 1;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.player-indicator.left {
+  background-color: #ff6b6b;
+}
+
+.player-indicator.right {
+  background-color: #4ecdc4;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  /* background-color: #fff; */
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.board-row {
+  display: flex;
+}
+
+.square {
+  width: 80px;
+  height: 80px;
+  font-size: 36px;
+  font-weight: bold;
+  margin: 5px;
+  background-color: #f8f9fa;
+  border: 2px solid #4a4a4a;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.square:hover {
+  background-color: #e9ecef;
+}
+
+.square:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.reset-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+  background-color: #5a6268;
+}

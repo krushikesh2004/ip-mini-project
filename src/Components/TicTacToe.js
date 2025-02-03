@@ -60,22 +60,26 @@ function TicTacToe() {
     <div className="tic-tac-toe">
       <h2>Tic-Tac-Toe</h2>
       <div className="status">{status}</div>
-      <div className="board">
-        <div className="board-row">
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
+      <div className="game-area">
+        <div className={`player-indicator left ${xIsNext ? 'active' : ''}`}>X</div>
+        <div className="board">
+          <div className="board-row">
+            {renderSquare(0)}
+            {renderSquare(1)}
+            {renderSquare(2)}
+          </div>
+          <div className="board-row">
+            {renderSquare(3)}
+            {renderSquare(4)}
+            {renderSquare(5)}
+          </div>
+          <div className="board-row">
+            {renderSquare(6)}
+            {renderSquare(7)}
+            {renderSquare(8)}
+          </div>
         </div>
-        <div className="board-row">
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
+        <div className={`player-indicator right ${!xIsNext ? 'active' : ''}`}>O</div>
       </div>
       <button className="reset-button" onClick={resetGame}>Reset Game</button>
     </div>

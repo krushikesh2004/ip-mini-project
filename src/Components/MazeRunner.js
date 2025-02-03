@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./MazeRunner.css";
 
 const MAZE_SIZE = 15;
@@ -9,25 +9,14 @@ const EXIT = "E";
 
 function MazeRunner() {
   const [maze, setMaze] = useState([]);
-  const [playerPosition, setPlayerPosition] = useState({x: 1, y: 1});
+  const [playerPosition, setPlayerPosition] = useState({ x: 1, y: 1 });
   const [gameWon, setGameWon] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(0);
+  const [bestTime, setBestTime] = useState(localStorage.getItem("mazeRunnerBestTime") || Infinity);
 
-  useEffect(() => {
-    generateMaze();
-    const timer = setInterval(() => {
-      if (!gameWon) {
-        setTimeElapsed((prevTime) => prevTime + 1);
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [gameWon]);
-
-  const generateMaze = () => {
-    let newMaze = Array(MAZE_SIZE)
-      .fill()
-      .map(() => Array(MAZE_SIZE).fill(WALL));
-    const stack = [{x: 1, y: 1}];
+  const generateMaze = useCallback(() => {
+    let newMaze = Array(MAZE_SIZE).fill().map(() => Array(MAZE_SIZE).fill(WALL));
+    const stack = [{ x: 1, y: 1 }];
     newMaze[1][1] = PATH;
 
     while (stack.length > 0) {
@@ -45,15 +34,29 @@ function MazeRunner() {
 
     newMaze[MAZE_SIZE - 2][MAZE_SIZE - 2] = EXIT;
     setMaze(newMaze);
-  };
+    setPlayerPosition({ x: 1, y: 1 });
+  }, []);
+
+  useEffect(() => {
+    generateMaze();
+  }, [generateMaze]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!gameWon) {
+        setTimeElapsed((prevTime) => prevTime + 1);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [gameWon]);
 
   const getUnvisitedNeighbors = (cell, maze) => {
     const neighbors = [];
     const directions = [
-      {dx: 0, dy: -2}, // Up
-      {dx: 2, dy: 0}, // Right
-      {dx: 0, dy: 2}, // Down
-      {dx: -2, dy: 0}, // Left
+      { dx: 0, dy: -2 },
+      { dx: 2, dy: 0 },
+      { dx: 0, dy: 2 },
+      { dx: -2, dy: 0 },
     ];
 
     for (const dir of directions) {
@@ -66,7 +69,7 @@ function MazeRunner() {
         newY < MAZE_SIZE - 1 &&
         maze[newY][newX] === WALL
       ) {
-        neighbors.push({x: newX, y: newY});
+        neighbors.push({ x: newX, y: newY });
       }
     }
     return neighbors;
@@ -85,43 +88,49 @@ function MazeRunner() {
       newY < MAZE_SIZE &&
       maze[newY][newX] !== WALL
     ) {
-      setPlayerPosition({x: newX, y: newY});
+      setPlayerPosition({ x: newX, y: newY });
 
       if (maze[newY][newX] === EXIT) {
         setGameWon(true);
+        if (timeElapsed < bestTime) {
+          setBestTime(timeElapsed);
+          localStorage.setItem("mazeRunnerBestTime", timeElapsed);
+        }
       }
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (gameWon) return;
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (gameWon) return;
 
-    switch (e.key) {
-      case "ArrowUp":
-        movePlayer(0, -1);
-        break;
-      case "ArrowRight":
-        movePlayer(1, 0);
-        break;
-      case "ArrowDown":
-        movePlayer(0, 1);
-        break;
-      case "ArrowLeft":
-        movePlayer(-1, 0);
-        break;
-      default:
-        break;
-    }
-  };
+      switch (e.key) {
+        case "ArrowUp":
+          movePlayer(0, -1);
+          break;
+        case "ArrowRight":
+          movePlayer(1, 0);
+          break;
+        case "ArrowDown":
+          movePlayer(0, 1);
+          break;
+        case "ArrowLeft":
+          movePlayer(-1, 0);
+          break;
+        default:
+          break;
+      }
+    },
+    [gameWon, movePlayer]
+  );
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [playerPosition, maze, gameWon]);
+  }, [handleKeyDown]);
 
   const resetGame = () => {
     generateMaze();
-    setPlayerPosition({x: 1, y: 1});
     setGameWon(false);
     setTimeElapsed(0);
   };
@@ -131,6 +140,7 @@ function MazeRunner() {
       <h2>Maze Runner</h2>
       <div className="maze-info">
         <span>Time: {timeElapsed}s</span>
+        <span>Best Time: {bestTime === Infinity ? "N/A" : `${bestTime}s`}</span>
         <button onClick={resetGame}>New Maze</button>
       </div>
       <div className="maze" tabIndex="0">
@@ -140,9 +150,7 @@ function MazeRunner() {
               <div
                 key={`${x}-${y}`}
                 className={`maze-cell ${cell === WALL ? "wall" : "path"} ${
-                  x === playerPosition.x && y === playerPosition.y
-                    ? "player"
-                    : ""
+                  x === playerPosition.x && y === playerPosition.y ? "player" : ""
                 } ${cell === EXIT ? "exit" : ""}`}
               >
                 {x === playerPosition.x && y === playerPosition.y
@@ -156,7 +164,10 @@ function MazeRunner() {
         ))}
       </div>
       {gameWon && (
-        <div className="win-message">You've escaped! Time: {timeElapsed}s</div>
+        <div className="win-message">
+          <p>You've escaped! Time: {timeElapsed}s</p>
+          <button onClick={resetGame}>Play Again</button>
+        </div>
       )}
     </div>
   );
